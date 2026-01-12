@@ -45,7 +45,7 @@ async function bootstrap() {
     }
   );
 
-  const port = configService.get<string>('PORT') || 8002;
+  const port = configService.get<string>('PORT') || 3500;
 
   logger.log(`Server starts on port ${port}`);
   logger.log(`Swagger running on http://localhost:${port}/api/v1/docs`);
