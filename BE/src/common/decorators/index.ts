@@ -31,6 +31,12 @@ export const EnumRequired = (enumType: any, name: string) => applyDecorators(
     IsEnum(enumType)
 )
 
+export const EnumNotRequired = (enumType: any) => applyDecorators(
+    ApiProperty({ required: false }),
+    IsOptional(),
+    IsEnum(enumType)
+)
+
 export const ArrayNotRequired = (type: any) => applyDecorators(
     ApiProperty({ required: false }),
     IsOptional(),
