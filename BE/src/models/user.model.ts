@@ -1,6 +1,7 @@
-import { Model, BelongsTo, Column, DataType, ForeignKey, Table, HasMany } from "sequelize-typescript";
+import { Model, BelongsTo, Column, DataType, ForeignKey, Table, HasMany, BeforeValidate } from "sequelize-typescript";
 import { Role } from "./role.model";
 import { RefreshToken } from "./refresh-token.model";
+import * as bcrypt from 'bcryptjs'
 
 @Table
 export class User extends Model<User>{
@@ -43,4 +44,25 @@ export class User extends Model<User>{
 
     @HasMany(() => RefreshToken)
     refreshTokens: RefreshToken[];
+
+    // Methods
+    comparePassword(password: string) {
+        const {password: passwordInDb} = this.get( {plain: true})
+        return bcrypt.compare(password, passwordInDb);
+    }
+
+    getUserWithoutPassword() {
+        const {password: _, ...rest } = this.get( {plain: true});
+        return rest
+    }
+
+    @BeforeValidate
+    static hashPassword(user: User) {
+        if(user.isNewRecord) {
+            const password = user.get('password');
+            const hashedPassword = bcrypt.hashSync(password, 10);
+
+            user.setDataValue('password', hashedPassword);
+        }
+    }
 }
