@@ -57,7 +57,7 @@ export class UserService {
         if(!isCorrectPassword) {
             throw new BadRequestException('Mật khẩu không chính xác.');
         }
-        const { password: _, ...rest} = user;
+        const { password: _, ...rest} = user.dataValues;
 
         return user;
     }

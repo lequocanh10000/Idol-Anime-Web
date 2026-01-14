@@ -14,7 +14,7 @@ export class AuthService {
     }
 
     async login({id, roleId}) {
-        // const plainUser = user.getUserWithoutPassword();
+        console.log(id, roleId);
         const accessToken = await this.jwtService.signAsync({id, roleId})
         return { 
             message: 'Đăng nhập thành công',
