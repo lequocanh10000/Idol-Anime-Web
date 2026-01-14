@@ -6,6 +6,7 @@ import { JwtModule, } from '@nestjs/jwt';
 import { sequelizeConfig } from './config/sequelize.config';
 import { AnimeModule } from './modules/anime/anime.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { UserModule } from './modules/user/user.module';
     }),
     AnimeModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule{
