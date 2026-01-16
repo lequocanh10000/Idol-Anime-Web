@@ -10,8 +10,8 @@ import { RoleGuard } from '../auth/guards/role.guard';
 export class AnimeController {
   constructor(private readonly animeService: AnimeService) {}
 
+  @UseGuards(new RoleGuard([1, 2]))
   @UseGuards(JwtGuard)
-  @UseGuards(new RoleGuard([1]))
   @Post('create')
   async create(@Body() dto: AddAnimeDto) {
     return await this.animeService.createAnime(dto)

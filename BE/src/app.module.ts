@@ -7,7 +7,7 @@ import { sequelizeConfig } from './config/sequelize.config';
 import { AnimeModule } from './modules/anime/anime.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-
+import { CharactersModule } from './modules/characters/characters.module';
 
 @Module({
   imports: [
@@ -30,6 +30,7 @@ import { AuthModule } from './modules/auth/auth.module';
     AnimeModule,
     UserModule,
     AuthModule,
+    CharactersModule,
   ],
 })
 export class AppModule implements NestModule{
