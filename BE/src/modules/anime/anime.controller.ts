@@ -17,28 +17,28 @@ export class AnimeController {
     return await this.animeService.createAnime(dto)
   }
 
-  @UseGuards(JwtGuard)
   @UseGuards(new RoleGuard([1, 2]))
+  @UseGuards(JwtGuard)
   @Get('all')
   async findAll(@Query() filterAnimeDto: FilterAnimeDto) {
     return await this.animeService.findAll(filterAnimeDto);
   }
 
-  @UseGuards(JwtGuard)
   @UseGuards(new RoleGuard([1, 2]))
+  @UseGuards(JwtGuard)
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.animeService.findOne(id);
   }
 
-  @UseGuards(JwtGuard)
   @UseGuards(new RoleGuard([1]))
+  @UseGuards(JwtGuard)
   async update(@Param('id') id: number, @Body() dto: UpdateAnimeDto) {
     return await this.animeService.updateAnime(id, dto);
   }
 
-  @UseGuards(JwtGuard)
   @UseGuards(new RoleGuard([1]))
+  @UseGuards(JwtGuard)
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await this.animeService.removeAnime(id);
