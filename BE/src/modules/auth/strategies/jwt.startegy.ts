@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       console.log(payload);
       return { 
           uid: payload.id,
-          role: payload.role
+          roleId: payload.roleId
       }; // trả về cho thằng AuthGuard
   }
 }
