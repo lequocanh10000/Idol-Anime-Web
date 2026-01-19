@@ -8,6 +8,7 @@ import { AnimeModule } from './modules/anime/anime.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CharactersModule } from './modules/characters/characters.module';
+import { SeedModule } from './modules/seed/seed.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CharactersModule } from './modules/characters/characters.module';
     UserModule,
     AuthModule,
     CharactersModule,
+    SeedModule,
   ],
 })
 export class AppModule implements NestModule{
