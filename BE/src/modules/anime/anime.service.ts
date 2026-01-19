@@ -297,7 +297,7 @@ export class AnimeService {
             await Promise.all([
                 anime.destroy({ transaction: t }),
                 this.songModel.destroy({ where: { animeId: id }, transaction: t }),
-                this.idolGroupModel.destroy({ where: { animeId: id }, transaction: t }),
+                this.idolGroupModel.destroy({ where: { animeId: id }, cascade: true, transaction: t }),
             ]);
             await t.commit();
             return { message: 'Xóa anime thành công' };
