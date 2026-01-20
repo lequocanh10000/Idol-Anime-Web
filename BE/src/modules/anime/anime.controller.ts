@@ -33,6 +33,7 @@ export class AnimeController {
 
   @UseGuards(new RoleGuard([1]))
   @UseGuards(JwtGuard)
+  @Patch(':id')
   async update(@Param('id') id: number, @Body() dto: UpdateAnimeDto) {
     return await this.animeService.updateAnime(id, dto);
   }
