@@ -12,7 +12,7 @@ export function NavBar() {
       </div>
       <nav className="nav__links">
         <NavLink to="/anime">Anime</NavLink>
-        <NavLink to="/characters">Nhân vật</NavLink>
+        {isAdmin && <NavLink to="/characters">Tạo nhân vật</NavLink>}
         {isAdmin && <NavLink to="/users">Người dùng</NavLink>}
       </nav>
       <span className="pill">{isAdmin ? 'ADMIN' : 'USER'}</span>

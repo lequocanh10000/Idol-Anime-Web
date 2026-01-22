@@ -50,6 +50,10 @@ export function LoginPage() {
         <button className="btn" type="submit" disabled={loading}>
           {loading ? 'Đang đăng nhập…' : 'Login'}
         </button>
+        <div style={{ marginTop: 16, textAlign: 'center' }}>
+          <span>Bạn chưa có tài khoản? </span>
+          <a href="/register" style={{ color: '#60a5fa', textDecoration: 'underline', cursor: 'pointer' }}>Đăng ký</a>
+        </div>
       </form>
     </div>
   );

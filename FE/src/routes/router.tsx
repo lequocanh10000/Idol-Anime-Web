@@ -7,12 +7,14 @@ import { AnimeListPage } from '../views/anime/AnimeListPage.tsx';
 import { AnimeDetailPage } from '../views/anime/AnimeDetailPage.tsx';
 import { CharactersPage } from '../views/characters/CharactersPage.tsx';
 import { UsersPage } from '../views/users/UsersPage.tsx';
+import { RegisterPage } from '../views/RegisterPage.tsx';
 
 export const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       { path: '/login', element: <LoginPage /> },
+      { path: '/register', element: <RegisterPage /> },
       {
         element: <ProtectedRoute />,
         children: [
@@ -25,7 +27,7 @@ export const router = createBrowserRouter([
             children: [{ path: '/users', element: <UsersPage /> }],
           },
         ],
-      },
+      },                               
     ],
   },
 ]);

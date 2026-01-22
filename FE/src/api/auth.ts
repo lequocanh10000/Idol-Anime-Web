@@ -1,6 +1,17 @@
 import { http, unwrap } from './http.ts';
 import type { ApiResponse } from './types';
 
+export type RegisterRequest = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export async function register(payload: RegisterRequest): Promise<void> {
+  const res = await http.post<ApiResponse<void>>('/user/register', payload);
+  unwrap(res.data);
+}
+
 export type LoginRequest = {
   username: string;
   password: string;
