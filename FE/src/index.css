@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -27,11 +33,16 @@ body {
   display: block;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
   width: 100%;
+}
+
+img {
+  max-width: 100%;
 }
 
 h1 {

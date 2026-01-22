@@ -162,10 +162,10 @@ function SongList({ songs }: { songs: Song[] }) {
     <table className="table">
       <thead>
         <tr>
-          <th>Title</th>
+          <th>Tên bài hát</th>
           <th>Artist</th>
-          <th>Type</th>
-          <th>Link</th>
+          <th>Loại</th>
+          <th>Đường dẫn</th>
         </tr>
       </thead>
       <tbody>
@@ -295,11 +295,11 @@ export function AnimeDetailPage() {
     <div className="page">
       <div className="row">
         <Link to="/anime" className="btn btn--ghost">
-          ← Back
+          ← Quay lại
         </Link>
       </div>
 
-      {loading && <p>Loading…</p>}
+      {loading && <p>Đang tải…</p>}
       {error && <p className="error">{error}</p>}
 
       {item && (
@@ -339,12 +339,12 @@ export function AnimeDetailPage() {
           </section>
 
           <section className="card">
-            <h2 style={{ marginTop: 0 }}>Songs</h2>
+            <h2 style={{ marginTop: 0 }}>Bài hát</h2>
             <SongList songs={Array.isArray(item.songs) ? item.songs : []} />
           </section>
 
           <section className="page">
-            <h2>Idol Groups</h2>
+            <h2>Nhóm</h2>
             {Array.isArray(item.idolGroups) && item.idolGroups.length > 0 ? (
               item.idolGroups.map((g) => (
                 <IdolGroupSection

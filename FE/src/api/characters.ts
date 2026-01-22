@@ -22,9 +22,9 @@ export type CreateCharacterRequest = {
 
 export type UpdateCharacterRequest = Partial<CreateCharacterRequest>;
 
-export async function createCharacter(payload: CreateCharacterRequest): Promise<Character> {
+export async function createCharacter(payload: CreateCharacterRequest): Promise<{ character: Character, message: string }> {
   const res = await http.post<ApiResponse<Character>>('/characters/create', payload);
-  return unwrap(res.data);
+  return { character: unwrap(res.data), message: res.data.message };
 }
 
 export async function updateCharacter(id: number, payload: UpdateCharacterRequest): Promise<Character> {

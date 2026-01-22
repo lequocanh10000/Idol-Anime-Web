@@ -20,9 +20,18 @@ import { useAuth } from '../../auth/AuthContext.tsx';
 
 export function AnimeListPage() {
   const { isAdmin } = useAuth();
+
+  // Filter, search, pagination state
   const [items, setItems] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [idolType, setIdolType] = useState<IdolType | ''>('');
+  const [animationFormat, setAnimationFormat] = useState<AnimationFormat | ''>('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(8);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
   const [showCreate, setShowCreate] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -54,14 +63,21 @@ export function AnimeListPage() {
 
   const [editForm, setEditForm] = useState<UpdateAnimeRequest>({});
 
-  async function reload() {
-    const data = await getAllAnime({ page: 1, limit: 50 });
+  async function reload(params?: { page?: number; limit?: number }) {
+    const data = await getAllAnime({
+      search: search.trim() || undefined,
+      idolType: idolType || undefined,
+      animationFormat: animationFormat || undefined,
+      page: params?.page ?? page,
+      limit: params?.limit ?? limit,
+    });
     setItems(Array.isArray(data.items) ? data.items : []);
+    setTotalPages(data.paginationMeta.totalPages);
+    setTotalItems(data.paginationMeta.totalItems);
   }
 
   useEffect(() => {
     let mounted = true;
-
     (async () => {
       try {
         setLoading(true);
@@ -73,12 +89,16 @@ export function AnimeListPage() {
         if (mounted) setLoading(false);
       }
     })();
-
     return () => {
       mounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [search, idolType, animationFormat, page, limit]);
+
+  function onFilterChange() {
+    setPage(1);
+    reload({ page: 1 });
+  }
 
   async function onCreate() {
     setError(null);
@@ -288,13 +308,48 @@ export function AnimeListPage() {
 
   return (
     <div className="page">
-      <div className="row" style={{ justifyContent: 'space-between' }}>
+      <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <h1 style={{ margin: 0 }}>Anime</h1>
-        {isAdmin && (
-          <button className="btn" onClick={() => setShowCreate((v) => !v)}>
-            {showCreate ? 'Đóng' : 'Thêm anime'}
-          </button>
-        )}
+        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
+          <div className="card" style={{ padding: 12, marginBottom: 0 }}>
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+              <input
+                placeholder="Tìm kiếm theo tên..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') onFilterChange(); }}
+                style={{ minWidth: 120 }}
+              />
+              <select value={idolType} onChange={e => { setIdolType(e.target.value as IdolType | ''); setPage(1); }}>
+                <option value="">Tất cả loại idol</option>
+                {idolTypeOptions.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+              <select value={animationFormat} onChange={e => { setAnimationFormat(e.target.value as AnimationFormat | ''); setPage(1); }}>
+                <option value="">Tất cả định dạng</option>
+                {animationFormatOptions.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+              <button className="btn" onClick={onFilterChange}>Lọc</button>
+            </div>
+          </div>
+          {isAdmin && (
+            <button className="btn" onClick={() => setShowCreate((v) => !v)}>
+              {showCreate ? 'Đóng' : 'Thêm anime'}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Pagination controls */}
+      <div className="row" style={{ margin: '12px 0', alignItems: 'center', gap: 12 }}>
+        <span className="muted">Tổng: {totalItems}</span>
+        <span className="muted">Trang:</span>
+        <button className="btn btn--ghost" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page <= 1}>Trước</button>
+        <span>{page} / {totalPages}</span>
+        <button className="btn btn--ghost" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page >= totalPages}>Sau</button>
+        <span className="muted">Hiển thị:</span>
+        <select value={limit} onChange={e => { setLimit(Number(e.target.value)); setPage(1); }}>
+          {[4, 8, 12, 20, 50].map(v => <option key={v} value={v}>{v}</option>)}
+        </select>
       </div>
 
       {isAdmin && showCreate && (
@@ -368,12 +423,16 @@ export function AnimeListPage() {
       <div className="grid">
         {items.map((a) => (
           <div key={a.id} className="card">
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <Link className="card__title" to={`/anime/${a.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="cardHeader">
+              <Link
+                className="card__title cardHeader__title"
+                to={`/anime/${a.id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
                 {a.title}
               </Link>
               {isAdmin && (
-                <div className="row">
+                <div className="btnGroup cardHeader__actions">
                   <button className="btn btn--ghost" onClick={() => beginEdit(a)} disabled={editingId === a.id || saving || creating}>
                     Sửa
                   </button>

@@ -28,7 +28,7 @@ export function CharactersPage() {
         role: role || undefined,
         imageUrl: imageUrl || undefined,
       });
-      setMessage(`Created character #${result.id}: ${result.name}`);
+      setMessage(result.message || `Created character #${result.character.id}: ${result.character.name}`);
       setName('');
       setSeiyuu('');
       setRole('');
@@ -43,10 +43,10 @@ export function CharactersPage() {
 
   return (
     <div className="page">
-      <h1>Characters</h1>
-      <p className="muted">
+      <h1>Tạo nhân vật</h1>
+      {/* <p className="muted">
         BE hiện chưa có endpoint list character, nên trang này demo tạo mới.
-      </p>
+      </p> */}
 
       {!isAdmin ? (
         <div className="card">
@@ -65,7 +65,7 @@ export function CharactersPage() {
           />
         </label>
         <label className="field">
-          <span>Name</span>
+          <span>Tên nhân vật</span>
           <input value={name} onChange={(e) => setName(e.target.value)} />
         </label>
         <label className="field">
@@ -77,7 +77,7 @@ export function CharactersPage() {
           <input value={role} onChange={(e) => setRole(e.target.value)} />
         </label>
         <label className="field">
-          <span>Image URL</span>
+          <span>Ảnh URL</span>
           <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
         </label>
 
@@ -85,7 +85,7 @@ export function CharactersPage() {
         {error && <div className="error">{error}</div>}
 
         <button className="btn" type="submit" disabled={loading || !name}>
-          {loading ? 'Đang tạo…' : 'Create'}
+          {loading ? 'Đang tạo…' : 'Tạo'}
         </button>
       </form>
       )}

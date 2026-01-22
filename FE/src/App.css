@@ -2,6 +2,7 @@
   min-height: 100vh;
   background: #0b1020;
   color: #e8eefc;
+  overflow-x: hidden;
 }
 
 .main {
@@ -16,23 +17,28 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
   padding: 14px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 16, 32, 0.8);
+  background: rgba(10, 16, 32, 0.95);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 .nav__brand {
   font-weight: 700;
   letter-spacing: 0.4px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .nav__links {
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .nav__links a {
@@ -40,6 +46,7 @@
   text-decoration: none;
   padding: 6px 10px;
   border-radius: 10px;
+  white-space: nowrap;
 }
 
 .nav__links a.active {
@@ -60,6 +67,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .page--center {
@@ -72,12 +80,44 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.cardHeader__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cardHeader__actions {
+  flex: 0 0 auto;
+}
+
+.cardHeader .card__title {
+  margin-bottom: 0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
+  min-width: 0;
 }
 
 .card {
@@ -85,6 +125,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 16px;
+  min-width: 0;
 }
 
 .card--click {
@@ -101,6 +142,8 @@
 .card__title {
   font-weight: 700;
   margin-bottom: 6px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .detailHeader {
@@ -169,6 +212,13 @@
   background: rgba(99, 102, 241, 0.18);
   color: #e8eefc;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  line-height: 1.1;
+  min-height: 40px;
 }
 
 .btn:disabled {

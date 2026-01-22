@@ -50,10 +50,6 @@ export function LoginPage() {
         <button className="btn" type="submit" disabled={loading}>
           {loading ? 'Đang đăng nhập…' : 'Login'}
         </button>
-
-        <p className="muted">
-          API: <code>{import.meta.env.VITE_API_BASE_URL}</code>
-        </p>
       </form>
     </div>
   );
