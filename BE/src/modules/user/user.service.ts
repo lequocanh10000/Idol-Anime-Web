@@ -58,7 +58,7 @@ export class UserService {
             throw new BadRequestException('Tài khoản đã bị khóa.');
         }
 
-        const isCorrectPassword = user.comparePassword(password);
+        const isCorrectPassword = await user.comparePassword(password);
         if (!isCorrectPassword) {
             throw new BadRequestException('Mật khẩu không chính xác.');
         }
