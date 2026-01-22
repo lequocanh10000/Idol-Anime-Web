@@ -35,15 +35,10 @@ export class UserService {
         const user = await this.findByEmail(createUserDto.email)
             || await this.findByUsername(createUserDto.username);
         if (user) {
-            throw new Error('Tài khoản đã tồn tại');
+            throw new BadRequestException('Tài khoản đã tồn tại');
         }
 
-        const hashedPassword = bcrypt.hashSync(createUserDto.password, 10);
-        const payload = {
-            ...createUserDto,
-            password: hashedPassword,
-        }
-        await this.userModel.create(payload as any);
+        await this.userModel.create(createUserDto as any);
         return { message: 'Đăng ký thành công' };
     }
 
@@ -57,7 +52,6 @@ export class UserService {
         if (!user.dataValues.isActive) {
             throw new BadRequestException('Tài khoản đã bị khóa.');
         }
-
         const isCorrectPassword = await user.comparePassword(password);
         if (!isCorrectPassword) {
             throw new BadRequestException('Mật khẩu không chính xác.');
