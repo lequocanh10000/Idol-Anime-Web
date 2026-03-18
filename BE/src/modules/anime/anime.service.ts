@@ -1,17 +1,27 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+ 
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable prettier/prettier */
+ 
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Anime, Character, IdolGroup, Song } from 'src/models';
 import { AddAnimeDto, IdolGroupDto, SongDto } from './dto/add-anime.dto';
 import { FilterAnimeDto } from './dto/filter-anime.dto';
-import { Op, Transaction, where } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import { ConfigService } from '@nestjs/config';
 import { UpdateAnimeDto, UpdateIdolGroupDto, UpdateSongDto } from './dto/update-anime.dto';
 
 @Injectable()
 export class AnimeService {
     constructor(
-        private readonly sequelize: Sequelize,
+    private readonly sequelize: Sequelize,
         @InjectModel(Anime) private readonly animeModel: typeof Anime,
         @InjectModel(IdolGroup) private readonly idolGroupModel: typeof IdolGroup,
         @InjectModel(Song) private readonly songModel: typeof Song,
